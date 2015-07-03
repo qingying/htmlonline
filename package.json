@@ -1,0 +1,39 @@
+{
+    "name": "htmlonline",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:qingying/htmlonline.git"
+    },
+    "keywords": [
+        "html",
+        "online",
+        "gulp"
+    ],
+    "author": "qingying",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/qingying/htmlonline/issues"
+    },
+    "homepage": "https://github.com/qingying/htmlonline",
+    "dependencies": {
+        "through2": "^0.6.1",
+        "gulp-util": "^3.0.0",
+        "cheerio": "~0.17.0",
+        "fsmore": "~1.0.1",
+        "ycssmin": "^1.0.1",
+        "uglify-js": "~2.4.0",
+        "coimport": "~1.0.0"
+    },
+    "publishConfig": {
+        "registry": "http://registry.npm.alibaba-inc.com"
+    },
+    "devDependencies": {
+        "gulp": "~3.8.10"
+    }
+}
