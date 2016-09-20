@@ -1,0 +1,41 @@
+{
+  "name": "htmlonline",
+  "version": "1.0.0",
+  "description": "html file transfrom",
+  "main": "./build/index.js",
+  "watch": {
+    "test": {
+      "patterns": ["src", "test"],
+      "extensions": "js,html",
+      "quiet": true
+    }
+  },
+  "scripts": {
+    "build": "babel src/ --out-dir build/",
+    "test": "npm run build && node build/index.js --src=./test/index.html --outDir=./testbuild/ --replaceAttr=taobao",
+    "watch": "npm-watch"
+  },
+  "author": "qingying",
+  "license": "ISC",
+  "bin": "./index.js",
+  "devDependencies": {
+    "cheerio": "0.22.0",
+    "yargs": "~5.0.0",
+    "path": "~0.12.7",
+    "glob": "~7.0.6",
+    "vinyl-fs": "~2.4.3",
+    "request": "~2.74.0",
+    "colors": "~1.1.2",
+    "colour": "~0.7.1",
+    "webpack": "~1.13.2",
+    "babel-cli": "^6.0.0",
+    "babel-core": "^6.6.x",
+    "babel-preset-es2015": "*",
+    "babel-preset-stage-0": "*",
+    "babel-preset-stage-1": "*",
+    "babel-preset-stage-2": "*",
+    "babel-preset-stage-3": "*",
+    "babel-polyfill": "~6.13.0",
+    "npm-watch": "*"
+  }
+}
