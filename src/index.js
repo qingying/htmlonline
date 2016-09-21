@@ -1,8 +1,9 @@
+#!/usr/bin/env node
+
 const argv = require('yargs').argv;
 const path = require('path');
 const fs = require('fs');
 const Request = require('request');
-const glob = require('glob').Glob;
 // const colors = require('colors');
 // 获取当前路径
 const dir_path= process.cwd();
@@ -10,7 +11,6 @@ import File from './lib/file.js';
 
 // 获取参数
 var src = argv.src;
-console.log('dir_path' + dir_path)
 var outDir = path.join(dir_path,argv.outDir);
 
 var transformConfig = {
@@ -19,35 +19,72 @@ var transformConfig = {
 	relativeTag: argv.relativeAttr || 'relative',
 	replaceTag: argv.replaceAttr,
 	onlineTag: argv.isOnlineAttr || 'online',
+	appname: argv.appname
 }
 var waitDownload = {};
 
 var cur_path = path.join(dir_path,src);
-fs.stat(cur_path, function(err,stats) {
-	if (stats.isFile(cur_path)) {
-		// 文件
-		let fileName = path.basename(cur_path);
-		let filePath = path.dirname(cur_path);
-		new File({
-			filePath: filePath,
-			fileName: fileName,
-			outDir: outDir,
-			transformConfig: transformConfig
-		});
-	} else {
-		// 路径
-		fs.readdir(path.join(dir_path,src),function(err,files){
-			files.forEach(function(filename) {
-				new File({
-					filePath: cur_path,
-					outDir: outDir,
-					fileName: filename,
-					transformConfig: transformConfig
-				});
-			})
+
+// 获取git分支号
+var gitHeadPath = path.join(dir_path,'./.git/HEAD');
+
+getVersion().then((version) => processFile(version))
+
+function getVersion() {
+	return new Promise((resolve, reject) => {
+		fs.readFile(gitHeadPath,'utf8',function(err,file) {
+			if (err) {
+				resolve && resolve(false);
+			} else {
+				let partten = file.match(/heads\/(.*)/);
+				let branchName = partten && partten[1];
+				if (branchName) {
+					let version = branchName.split('/')[1] || false;
+					resolve && resolve(version);
+				} else {
+					resolve && resolve(false);
+				}
+			}
 		})
-	}
-})
+	})
+}
+
+function processFile(version) {
+	fs.stat(cur_path, function(err,stats) {
+		if (err) {
+			console.log(err);
+			return;
+		}
+		if (stats.isFile(cur_path)) {
+			// 文件
+			let fileName = path.basename(cur_path);
+			let filePath = path.dirname(cur_path);
+			new File({
+				filePath: filePath,
+				fileName: fileName,
+				outDir: outDir,
+				version: version,
+				transformConfig: transformConfig
+			});
+		} else {
+			// 路径
+			fs.readdir(path.join(dir_path,src),function(err,files){
+				files.forEach(function(filename) {
+					new File({
+						filePath: cur_path,
+						fileName: filename,
+						outDir: outDir,
+						version: version,
+						transformConfig: transformConfig
+					});
+				})
+			})
+		}
+	})
+}
+
+
+
 
 
 // function dealFile(filePath) {

@@ -12,6 +12,7 @@ export default class File {
 		this.filePath = config.filePath;
 		this.outDir = config.outDir;
 		this.fileName = config.fileName;
+		this.version = config.version;
 		this.waitDownload = [];
 		this.fileContent = '';
 		this.outHtml = '';
@@ -75,7 +76,8 @@ export default class File {
 			node: self.$(node),
 			// type: type,
 			transformConfig: self.transformConfig,
-			waitDownload: self.waitDownload
+			waitDownload: self.waitDownload,
+			version: self.version
 		});
 	}
 	downloadFiles() {

@@ -5,6 +5,7 @@ export default class ProcessNode {
 		// this.type = config.type;
 		this.transformConfig = config.transformConfig;
 		this.waitDownload = config.waitDownload;
+		this.version = config.version;
 		this.processNode();
 	}
 	processNode() {
@@ -37,6 +38,17 @@ export default class ProcessNode {
 		this.node.removeAttr(this.transformConfig[filter]);
 		return value;
 	}
+	getFileName(src) {
+		let sourceSrc;
+		let partten = src.match(/(build|dest|dist)\/(.*)/);
+		if (partten) {
+			sourceSrc = partten[2];
+		} else {
+			console.log(src + '没有找到符合规则的相对路径'.error);
+			sourceSrc = false;
+		}
+		return sourceSrc;
+	}
 	removeFun() {
 		this.node.remove();
 	}
@@ -44,13 +56,10 @@ export default class ProcessNode {
 		this.waitDownload.push(this.node);
 	}
 	relativeFun(relativeValue) {
-		let newSrc,sourceSrc;
+		let newSrc;
 		let src = this.node.attr('src');
-		let partten = src.match(/(build|dest|dist)\/(.*)/);
-		if (partten) {
-			sourceSrc = partten[2];
-		} else {
-			console.log(src + '没有找到符合规则的相对路径'.error);
+		let sourceSrc = this.getFileName(src);
+		if (!sourceSrc) {
 			return;
 		}
 		newSrc = './' + sourceSrc;
@@ -73,5 +82,26 @@ export default class ProcessNode {
 	onlineFun(onlineValue) {
 		// console.log(process);
 		console.log(onlineValue)
+		let src = this.node.attr('src');
+		let sourceSrc = this.getFileName(src);
+		if (!sourceSrc) {
+			return;
+		}
+		let version = this.version;
+		let appname = this.transformConfig.appname;
+		if (!version) {
+			console.log('没有获取到版本号，请检查分支'.error);
+			return;
+		}
+
+		if (!appname && onlineValue.test(/\{appname\}/)) {
+			console.log('没有获取到应用名，请检查配置'.error);
+			return;
+		}
+		let newSrc = onlineValue
+					.replace(/{appname}/,appname)
+					.replace(/{version}/,version)
+					.replace(/{name}/,sourceSrc);
+		console.log(newSrc);
 	}
 }

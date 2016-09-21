@@ -12,7 +12,7 @@
     },
     "scripts": {
         "build": "babel src/ --out-dir build/",
-        "test": "npm run build && node build/index.js --src=./test/index.html --outDir=./testbuild/ --replaceAttr=taobao --appname=app-test",
+        "test": "npm run build && node build/index.js --src=./test/index.html --outDir=./testbuild/ --replaceAttr=taobao --appname=app-test --appname=app-test",
         "watch": "npm-watch",
         "publish-npm": "copy package_npm.json package.json && npm run build && npm publish",
         "publish-tnpm": "copy package_tnpm.json package.json && npm run build && tnpm publish"
