@@ -10,26 +10,26 @@ export default class ProcessNode {
 		this.processNode();
 	}
 	processNode() {
-		if (this.filterNode('removeTag')) {
+		if (this.filterNode('removeTag') != undefined ) {
 			// 移除标签
 			return this.removeFun();
 		}
-		if (this.filterNode('inlineTag')) {
+		if (this.filterNode('inlineTag') != undefined) {
 			// 内联文件
 			return this.inlineFun();
 		}
 		let relativeValue = this.filterNode('relativeTag');
-		if (relativeValue) {
+		if (relativeValue != undefined ) {
 			// 替换相对路径
 			return this.relativeFun(relativeValue);
 		}
 		let replaceValue = this.filterNode('replaceTag')
-		if (replaceValue) {
+		if (replaceValue != undefined ) {
 			// 替换成配置链接
 			this.replaceFun(replaceValue);
 		}
 		let absoluteValue = this.filterNode('absoluteTag')
-		if (absoluteValue) {
+		if (absoluteValue != undefined ) {
 			// 替换成线上链接
 			this.absoluteFun(absoluteValue);
 		}
