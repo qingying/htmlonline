@@ -6,6 +6,7 @@ export default class ProcessNode {
 		this.transformConfig = config.transformConfig;
 		this.waitDownload = config.waitDownload;
 		this.version = config.version;
+		this.srcFilter = this.getSrcFilter();
 		this.processNode();
 	}
 	processNode() {
@@ -27,10 +28,10 @@ export default class ProcessNode {
 			// 替换成配置链接
 			this.replaceFun(replaceValue);
 		}
-		let onlineValue = this.filterNode('onlineTag')
-		if (onlineValue) {
+		let absoluteValue = this.filterNode('absoluteTag')
+		if (absoluteValue) {
 			// 替换成线上链接
-			this.onlineFun(onlineValue);
+			this.absoluteFun(absoluteValue);
 		}
 	}
 	filterNode(filter) {
@@ -38,7 +39,7 @@ export default class ProcessNode {
 		this.node.removeAttr(this.transformConfig[filter]);
 		return value;
 	}
-	getFileName(src) {
+	getFilePath(src) {
 		let sourceSrc;
 		let partten = src.match(/(build|dest|dist)\/(.*)/);
 		if (partten) {
@@ -49,6 +50,22 @@ export default class ProcessNode {
 		}
 		return sourceSrc;
 	}
+	getFileName(sourceSrc) {
+		let namePartten = sourceSrc.match(/([^\.]*)\.[.]*/);
+		let name = namePartten && namePartten[1];
+		name = name || false;
+		return name;
+	}
+	getSrcFilter() {
+		let srcFilter;
+		let type = this.node[0].tagName;
+		if (type == 'link') {
+			srcFilter = 'href';
+		} else {
+			srcFilter = 'src';
+		}
+		return srcFilter;
+	}
 	removeFun() {
 		this.node.remove();
 	}
@@ -57,51 +74,65 @@ export default class ProcessNode {
 	}
 	relativeFun(relativeValue) {
 		let newSrc;
-		let src = this.node.attr('src');
-		let sourceSrc = this.getFileName(src);
+		let src;
+		let srcFilter = this.srcFilter;
+		src = this.node.attr(srcFilter);
+		let sourceSrc = this.getFilePath(src);
 		if (!sourceSrc) {
 			return;
 		}
 		newSrc = './' + sourceSrc;
-		if (relativeValue != 'true') { 
-			let namePartten = sourceSrc.match(/([^\.]*)\.[.]*/);
-			if (namePartten) {
-				let name = namePartten[1];
+		if (relativeValue != 'true') {
+			let name = this.getFileName(sourceSrc);
+			if (name) {
 				newSrc = './' + relativeValue.replace(/{name}/,name)
 			}
 		}
-		this.node.attr('src',newSrc);
+		this.node.attr(srcFilter,newSrc);
 	}
 	replaceFun(replaceValue) {
+
 		if (replaceValue == 'remove') {
 			this.removeFun();
 		} else {
-			this.node.attr('src',replaceValue)
+			this.node.attr(this.srcFilter,replaceValue)
 		}
 	}
-	onlineFun(onlineValue) {
+	absoluteFun(absoluteValue) {
 		// console.log(process);
-		console.log(onlineValue)
-		let src = this.node.attr('src');
-		let sourceSrc = this.getFileName(src);
+		let srcFilter = this.srcFilter;
+		let src = this.node.attr(srcFilter);
+		let sourceSrc = this.getFilePath(src);
+		let fileName = this.getFileName(sourceSrc);
 		if (!sourceSrc) {
 			return;
 		}
 		let version = this.version;
 		let appname = this.transformConfig.appname;
+		let aliEnv = this.transformConfig.ali;
 		if (!version) {
 			console.log('没有获取到版本号，请检查分支'.error);
 			return;
 		}
-
-		if (!appname && onlineValue.test(/\{appname\}/)) {
+		if (!appname && absoluteValue.test(/\{appname\}/)) {
 			console.log('没有获取到应用名，请检查配置'.error);
 			return;
+		} 
+		let newSrc
+		if (aliEnv) {
+			absoluteValue = absoluteValue || sourceSrc;
+			if (aliEnv == 'dev') {
+				newSrc = '//g.assets.daily.taobao.net/mtb/' + appname + '/' + version + '/' + absoluteValue;
+			} else {
+				newSrc = '//g.alicdn.com/mtb/' + appname + '/' + version + '/' + absoluteValue;
+			}	
+			newSrc = newSrc.replace(/{name}/,fileName);
+		} else {
+			newSrc = absoluteValue
+						.replace(/{appname}/,appname)
+						.replace(/{version}/,version)
+						.replace(/{name}/,fileName);
 		}
-		let newSrc = onlineValue
-					.replace(/{appname}/,appname)
-					.replace(/{version}/,version)
-					.replace(/{name}/,sourceSrc);
-		console.log(newSrc);
+		this.node.attr(srcFilter,newSrc);
 	}
 }

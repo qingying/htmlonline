@@ -1,6 +1,6 @@
 {
     "name": "@ali/htmlonline",
-    "version": "2.0.4",
+    "version": "2.0.7",
     "description": "html file transfrom",
     "main": "./build/index.js",
     "watch": {
@@ -14,8 +14,8 @@
         "build": "babel src/ --out-dir build/",
         "test": "npm run build && node build/index.js --src=./test/index.html --outDir=./testbuild/ --replaceAttr=taobao --appname=app-test",
         "watch": "npm-watch",
-        "publish-npm": "copy package_npm.json package.json && npm run build && npm publish",
-        "publish-tnpm": "copy package_tnpm.json package.json && npm run build && tnpm publish"
+        "publish-npm": "cp package_npm.json package.json && npm run build && npm publish",
+        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish"
     },
     "publishConfig": {
         "registry": "http://registry.npm.alibaba-inc.com"

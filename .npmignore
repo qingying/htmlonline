@@ -5,3 +5,4 @@ testbuild
 webpack.config.js
 package_npm.json
 package_tnpm.json
+note.js

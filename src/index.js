@@ -17,9 +17,10 @@ var transformConfig = {
 	removeTag: argv.removeAttr || 'remove',
 	inlineTag: argv.inlineAttr || 'inline',
 	relativeTag: argv.relativeAttr || 'relative',
-	replaceTag: argv.replaceAttr,
-	onlineTag: argv.isOnlineAttr || 'online',
-	appname: argv.appname
+	replaceTag: argv.replaceAttr || 'publish',
+	absoluteTag: argv.absoluteAttr || 'absolute',
+	appname: argv.appname,
+	ali: argv.ali
 }
 var waitDownload = {};
 
