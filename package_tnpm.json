@@ -1,6 +1,6 @@
 {
     "name": "@ali/htmlonline",
-    "version": "2.0.9",
+    "version": "2.0.11",
     "description": "html file transfrom",
     "main": "./build/index.js",
     "watch": {

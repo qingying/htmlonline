@@ -45,6 +45,7 @@ export default class File {
 	}
 	writeFile() {
 		this.outHtml = this.$.html();
+		
 		if (!fs.existsSync(this.outDir)) {
 			fs.mkdirSync(this.outDir)
 		}
@@ -58,7 +59,10 @@ export default class File {
 		})
 	}
 	processDoc() {
-		let $ = cheerio.load(this.fileContent);
+		let $ = cheerio.load(this.fileContent,{
+	        decodeEntities: false,
+	        normalizeWhitespace: false
+	    });
 		this.$ = $;
 		this.processNodeList('link');
 		this.processNodeList('script');
