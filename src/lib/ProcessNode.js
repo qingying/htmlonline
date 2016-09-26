@@ -40,20 +40,17 @@ export default class ProcessNode {
 		return value;
 	}
 	getFilePath(src) {
-		let sourceSrc;
+		let sourceSrc = '';
 		let partten = src.match(/(build|dest|dist)\/(.*)/);
 		if (partten) {
 			sourceSrc = partten[2];
-		} else {
-			console.log(src + '没有找到符合规则的相对路径'.error);
-			sourceSrc = false;
 		}
 		return sourceSrc;
 	}
 	getFileName(sourceSrc) {
 		let namePartten = sourceSrc.match(/([^\.]*)\.[.]*/);
 		let name = namePartten && namePartten[1];
-		name = name || false;
+		name = name || '';
 		return name;
 	}
 	getSrcFilter() {
@@ -78,9 +75,6 @@ export default class ProcessNode {
 		let srcFilter = this.srcFilter;
 		src = this.node.attr(srcFilter);
 		let sourceSrc = this.getFilePath(src);
-		if (!sourceSrc) {
-			return;
-		}
 		newSrc = './' + sourceSrc;
 		if (relativeValue != 'true') {
 			let name = this.getFileName(sourceSrc);
@@ -104,9 +98,7 @@ export default class ProcessNode {
 		let src = this.node.attr(srcFilter);
 		let sourceSrc = this.getFilePath(src);
 		let fileName = this.getFileName(sourceSrc);
-		if (!sourceSrc) {
-			return;
-		}
+		
 		let version = this.version;
 		let appname = this.transformConfig.appname;
 		let aliEnv = this.transformConfig.ali;

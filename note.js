@@ -25,3 +25,7 @@ todo list
 webpack 打包
 
 isOnlineAttr 换成isAbsoluteAttr默认值absolute
+
+todo list
+增加ignore文件
+appname 默认值改成当前目录名
