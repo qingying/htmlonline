@@ -5,7 +5,6 @@ export default class ProcessNode {
 		// this.type = config.type;
 		this.transformConfig = config.transformConfig;
 		this.waitDownload = config.waitDownload;
-		this.version = config.version;
 		this.srcFilter = this.getSrcFilter();
 		this.processNode();
 	}
@@ -99,17 +98,13 @@ export default class ProcessNode {
 		let sourceSrc = this.getFilePath(src);
 		let fileName = this.getFileName(sourceSrc);
 		
-		let version = this.version;
+		let version = this.transformConfig.version;
 		let appname = this.transformConfig.appname;
 		let aliEnv = this.transformConfig.ali;
 		if (!version) {
 			console.log('没有获取到版本号，请检查分支'.error);
 			return;
 		}
-		if (!appname && absoluteValue.test(/\{appname\}/)) {
-			console.log('没有获取到应用名，请检查配置'.error);
-			return;
-		} 
 		let newSrc
 		if (aliEnv) {
 			absoluteValue = absoluteValue || sourceSrc;

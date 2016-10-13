@@ -24,8 +24,8 @@ todo list
 高亮显示异常提示 *
 webpack 打包
 
-isOnlineAttr 换成isAbsoluteAttr默认值absolute
+isOnlineAttr 换成isAbsoluteAttr默认值absolute*
 
 todo list
-增加ignore文件
-appname 默认值改成当前目录名
+增加ignore文件*
+appname 默认值改成当前目录名*

@@ -35,17 +35,19 @@ export default class File {
 			let readFilePath = path.join(filePath,fileName);
 			fs.readFile(readFilePath,'utf8',function(err,file) {
 				if (!file) {
+					console.log(readFilePath + ' get fail'.error)
 					reject && reject();
 					return;
 				}
 				self.fileContent = file;
+				console.log('read file success')
 				resolve && resolve()
 			})
 		})
 	}
 	writeFile() {
 		this.outHtml = this.$.html();
-		
+		console.log('write file')
 		if (!fs.existsSync(this.outDir)) {
 			fs.mkdirSync(this.outDir)
 		}
@@ -59,6 +61,7 @@ export default class File {
 		})
 	}
 	processDoc() {
+		console.log('processDoc')
 		let $ = cheerio.load(this.fileContent,{
 	        decodeEntities: false,
 	        normalizeWhitespace: false

@@ -12,10 +12,10 @@
     },
     "scripts": {
         "build": "babel src/ --out-dir build/",
-        "test": "npm run build && node build/index.js --src=./test/index.html --outDir=./testbuild/ --replaceAttr=taobao --appname=app-test",
+        "test": "npm run build && mocha ./test/test.js",
         "watch": "npm-watch",
         "publish-npm": "cp package_npm.json package.json && npm run build && npm publish",
-        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish"
+        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish",
     },
     "publishConfig": {
         "registry": "http://registry.npm.alibaba-inc.com"
@@ -44,6 +44,8 @@
         "babel-preset-stage-1": "*",
         "babel-preset-stage-2": "*",
         "babel-preset-stage-3": "*",
-        "npm-watch": "*"
+        "npm-watch": "*",
+        "mocha": "~3.1.0",
+        "commander": "~2.9.0"
     }
 }
