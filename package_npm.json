@@ -15,7 +15,7 @@
         "test": "npm run build && mocha ./test/test.js",
         "watch": "npm-watch",
         "publish-npm": "cp package_npm.json package.json && npm run build && npm publish",
-        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish",
+        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish"
     },
     "repository": {
         "type": "git",

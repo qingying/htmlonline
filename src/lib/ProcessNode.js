@@ -40,7 +40,7 @@ export default class ProcessNode {
 	}
 	getFilePath(src) {
 		let sourceSrc = '';
-		let partten = src.match(/(build|dest|dist)\/(.*)/);
+		let partten = src.match(/(build|dest|dist|deploy)\/(.*)/);
 		if (partten) {
 			sourceSrc = partten[2];
 		}
