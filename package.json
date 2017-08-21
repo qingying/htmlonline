@@ -1,5 +1,5 @@
 {
-    "name": "@ali/htmlonline",
+    "name": "htmlonline",
     "version": "2.0.12",
     "description": "html file transfrom",
     "main": "./build/index.js",
@@ -14,11 +14,7 @@
         "build": "babel src/ --out-dir build/",
         "test": "npm run build && mocha ./test/test.js",
         "watch": "npm-watch",
-        "publish-npm": "cp package_npm.json package.json && npm run build && npm publish",
-        "publish-tnpm": "cp package_tnpm.json package.json && npm run build && tnpm publish"
-    },
-    "publishConfig": {
-        "registry": "http://registry.npm.alibaba-inc.com"
+        "publish-npm": "npm run build && npm publish"
     },
     "repository": {
         "type": "git",
@@ -32,7 +28,6 @@
         "cheerio": "0.22.0",
         "path": "~0.12.7",
         "request": "~2.74.0",
-        "babel-polyfill": "~6.13.0",
         "colour": "~0.7.1"
     },
     "devDependencies": {
@@ -44,6 +39,7 @@
         "babel-preset-stage-1": "*",
         "babel-preset-stage-2": "*",
         "babel-preset-stage-3": "*",
+        "babel-polyfill": "~6.13.0",
         "npm-watch": "*",
         "mocha": "~3.1.0",
         "commander": "~2.9.0"

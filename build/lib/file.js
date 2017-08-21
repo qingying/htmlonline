@@ -171,19 +171,17 @@ var File = function () {
 						}
 					});
 				} else {
-					(function () {
-						// 本地文件
-						var linkPath = _path2.default.join(_this5.filePath, link);
-						var self = _this5;
-						_fs2.default.readFile(linkPath, function (err, file) {
-							if (err) {
-								reject && reject();
-							} else {
-								self.replaceNode(node, file);
-								resolve && resolve();
-							}
-						});
-					})();
+					// 本地文件
+					var linkPath = _path2.default.join(_this5.filePath, link);
+					var _self = _this5;
+					_fs2.default.readFile(linkPath, function (err, file) {
+						if (err) {
+							reject && reject();
+						} else {
+							_self.replaceNode(node, file);
+							resolve && resolve();
+						}
+					});
 				}
 			});
 		}
