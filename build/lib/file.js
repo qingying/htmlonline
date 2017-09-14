@@ -31,7 +31,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 require('./color');
-require("babel-polyfill");
+require('babel-polyfill');
 
 var File = function () {
 	function File(config) {
@@ -72,6 +72,9 @@ var File = function () {
 				var fileName = _this2.fileName;
 				var readFilePath = _path2.default.join(filePath, fileName);
 				_fs2.default.readFile(readFilePath, 'utf8', function (err, file) {
+					if (err) {
+						console.log(err);
+					}
 					if (!file) {
 						console.log(readFilePath + ' get fail'.error);
 						reject && reject();
@@ -94,6 +97,7 @@ var File = function () {
 			var outPath = _path2.default.join(this.outDir, this.fileName);
 			_fs2.default.writeFile(outPath, this.outHtml, function (err) {
 				if (err) {
+					console.log(err);
 					console.log(outPath + '写入失败'.error);
 				} else {
 					console.log(outPath + '创建成功'.info);
@@ -152,7 +156,7 @@ var File = function () {
 
 			var self = this;
 			return new Promise(function (resolve, reject) {
-				var link = node.attr('src') || node.attr('link');
+				var link = node.attr('src') || node.attr('href');
 				if (!link) {
 					resolve && resolve();
 				}
@@ -166,6 +170,7 @@ var File = function () {
 							self.replaceNode(node, file);
 							resolve && resolve();
 						} else {
+							console.log(error);
 							console.log(link + '下载失败，请检查网络后重试'.error);
 							reject && reject();
 						}
@@ -176,6 +181,7 @@ var File = function () {
 					var _self = _this5;
 					_fs2.default.readFile(linkPath, function (err, file) {
 						if (err) {
+							console.log(err);
 							reject && reject();
 						} else {
 							_self.replaceNode(node, file);
@@ -188,8 +194,15 @@ var File = function () {
 	}, {
 		key: 'replaceNode',
 		value: function replaceNode(node, content) {
-			node.removeAttr('src');
-			node.removeAttr('script');
+			var tagName = node[0].name;
+			if (tagName == 'script') {
+				node.removeAttr('src');
+				node.removeAttr('script');
+			}
+			if (tagName == 'link') {
+				node[0].tagName = 'style';
+				node.removeAttr('href');
+			}
 			node.text(content);
 		}
 	}]);

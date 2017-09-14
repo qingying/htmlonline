@@ -48,6 +48,7 @@ var Htmlonline = function () {
 			var self = this;
 			fs.stat(src, function (err, stats) {
 				if (err) {
+					console.log(err);
 					console.log(src + ' get fail'.error);
 					throw new Error('fail');
 					return;

@@ -26,6 +26,7 @@ export default class Htmlonline {
 		let self = this;
 		fs.stat(src, function(err,stats) {
 			if (err) {
+				console.log(err);
 				console.log( src + ' get fail'.error);
 				throw new Error('fail')
 				return;

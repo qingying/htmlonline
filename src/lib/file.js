@@ -4,7 +4,7 @@ import cheerio from 'cheerio';
 import Request from 'request';
 import ProcessNode from './ProcessNode';
 require('./color');
-require("babel-polyfill");
+require('babel-polyfill');
 
 export default class File {
 	constructor(config) {
@@ -34,6 +34,9 @@ export default class File {
 			let fileName = this.fileName;
 			let readFilePath = path.join(filePath,fileName);
 			fs.readFile(readFilePath,'utf8',function(err,file) {
+				if (err) {
+					console.log(err)
+				}
 				if (!file) {
 					console.log(readFilePath + ' get fail'.error)
 					reject && reject();
@@ -54,6 +57,7 @@ export default class File {
 		let outPath = path.join(this.outDir,this.fileName);
 		fs.writeFile(outPath,this.outHtml,function(err){
 			if (err) {
+				console.log(err)
 				console.log(outPath + '写入失败'.error);
 			} else {
 				console.log(outPath + '创建成功'.info);
@@ -94,7 +98,7 @@ export default class File {
 	downloadItem(node) {
 		let self = this;
 		return new Promise((resolve, reject) => {
-			let link = node.attr('src') || node.attr('link');
+			let link = node.attr('src') || node.attr('href');
 			if (!link) {
 				resolve && resolve()
 			}
@@ -108,6 +112,7 @@ export default class File {
 						self.replaceNode(node,file);
 						resolve && resolve();
 					} else {
+						console.log(error)
 						console.log(link + '下载失败，请检查网络后重试'.error);
 						reject && reject();
 					}
@@ -118,6 +123,7 @@ export default class File {
 				let self = this;
 				fs.readFile(linkPath,function(err, file) {
 					if (err) {
+						console.log(err);
 						reject && reject();
 					} else {
 						self.replaceNode(node, file);
@@ -128,8 +134,15 @@ export default class File {
 		})
 	}
 	replaceNode(node,content) {
-		node.removeAttr('src');
-		node.removeAttr('script');
+		var tagName = node[0].name
+		if (tagName == 'script') {
+			node.removeAttr('src');
+			node.removeAttr('script');
+		}
+		if (tagName == 'link') {
+			node[0].tagName = 'style'
+			node.removeAttr('href')
+		}
 		node.text(content);
 	}
 }

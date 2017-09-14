@@ -20,6 +20,7 @@ function getVersion() {
 	return new Promise((resolve, reject) => {
 		fs.readFile(gitHeadPath,'utf8',function(err,file) {
 			if (err) {
+				console.log(err);
 				resolve && resolve(false);
 			} else {
 				let partten = file.match(/heads\/(.*)/);
