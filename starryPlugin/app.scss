@@ -1,0 +1,37 @@
+.container {
+    width: 600px;
+    margin: 30px auto;
+    position: relative;
+
+    .helper {
+        position: absolute;
+        right: 100px;
+        top: 0;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .input-wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 32px;
+        margin-bottom: 10px;
+        >* {
+            margin-right: 5px;
+        }
+        .tip {
+            display: block;
+            width: 100px;
+            text-align: right;
+        }
+        .text-input {
+            width: 300px;
+        }
+    }
+
+    .save-btn {
+        display: block;
+        margin: 30px auto;
+    }
+}

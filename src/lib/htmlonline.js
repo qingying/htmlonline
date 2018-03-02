@@ -5,6 +5,20 @@ const fs = require('fs');
 const Request = require('request');
 const cur_path= process.cwd();
 
+/*
+config
+	src: 源目录
+	out: 最终生成的目录
+	transformConfig: 
+		removeTag: 移除标签属性名称
+		inlineTag: 替换成inline标签属性名称
+		relativeTag: 替换成相对路径标签属性名称
+		replaceTag: 替换成对应链接的属性名称
+		absoluteTag: 替换成线上路径
+		ali: 是否要用阿里线上路径匹配规则
+		appname: 应用名称
+		version: 版本号
+*/
 export default class Htmlonline {
 	constructor(config) {
 		this.src = config.src;
