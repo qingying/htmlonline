@@ -1,8 +1,9 @@
 {
     "name": "htmlonline",
-    "version": "2.0.23",
+    "version": "2.0.24",
     "description": "html file transfrom",
-    "main": "./build/index.js",
+    "main": "./build/lib/htmlonline.js",
+    "bin": "./build/index.js",
     "watch": {
         "test": {
             "patterns": ["src", "test"],
@@ -32,7 +33,7 @@
         "request": "~2.74.0",
         "colour": "~0.7.1",
         "babel-polyfill": "~6.13.0",
-        "@ali/starry-plugin-helper": "0.0.24"
+        "@ali/starry-plugin-helper": "0.0.25"
     },
     "devDependencies": {
         "webpack": "~1.13.2",
