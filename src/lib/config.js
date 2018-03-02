@@ -42,8 +42,8 @@ getVersion().then(function(version) {
 	}
 })
 var config = {
-	src: src,
-	out: out,
+	src: path.join(cur_path, src),
+	out: path.join(cur_path, out),
 	transformConfig: transformConfig
 }
 

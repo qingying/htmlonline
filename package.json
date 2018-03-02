@@ -1,6 +1,6 @@
 {
     "name": "htmlonline",
-    "version": "2.0.24",
+    "version": "2.0.26",
     "description": "html file transfrom",
     "main": "./build/lib/htmlonline.js",
     "bin": "./build/index.js",
@@ -25,7 +25,6 @@
     },
     "author": "qingying",
     "license": "MIT",
-    "bin": "./build/index.js",
     "dependencies": {
         "yargs": "~5.0.0",
         "cheerio": "0.22.0",

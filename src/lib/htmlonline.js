@@ -7,8 +7,8 @@ const cur_path= process.cwd();
 
 /*
 config
-	src: 源目录
-	out: 最终生成的目录
+	src: 源目录, path.join过的路径
+	out: 最终生成的目录, path.join过的路径
 	transformConfig: 
 		removeTag: 移除标签属性名称
 		inlineTag: 替换成inline标签属性名称
@@ -27,13 +27,13 @@ export default class Htmlonline {
 		if (!this.src || !this.out) {
 			console.log('文件路径没传'.error)
 		} else {
-			this.getCompletePath();
+			// this.getCompletePath();
 			this.processFile();
 		}
 	}
 	getCompletePath() {
-		this.src = path.join(cur_path, this.src);
-		this.out = path.join(cur_path, this.out);
+		// this.src = path.join(cur_path, this.src);
+		// this.out = path.join(cur_path, this.out);
 	}
 	processFile() {
 		let src = this.src;
